@@ -14,7 +14,10 @@ function MainContainer() {
   React.useEffect(() => {
     makeRequest(GET_ALL_EVENTS, {}, navigate)
       .then((data) => {
-        setEvents(data);
+        const sortedData = data.sort((a, b) =>
+          a.datetime < b.datetime ? -1 : 1
+        );
+        setEvents(sortedData);
       })
       .catch((err) => {
         setError(err);
@@ -29,6 +32,7 @@ function MainContainer() {
       </div>
     );
   }
+
   return (
     <div className="main-container padding">
       <FilterBar />
