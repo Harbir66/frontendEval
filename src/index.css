@@ -11,3 +11,12 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+
+.padding {
+  padding-left: 210px;
+  padding-right: 210px;
+}
+
+/* font-family: 'Big Shoulders Inline Display', cursive;
+font-family: 'Big Shoulders Text', cursive;
+font-family: 'Sofia Sans', sans-serif; */
