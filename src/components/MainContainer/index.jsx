@@ -33,6 +33,10 @@ function MainContainer() {
     }
   };
 
+  const handleRadio = (filteredEvents) => {
+    setEvents(filteredEvents);
+  };
+
   if (error) {
     return (
       <div className="main-container padding">
@@ -57,7 +61,7 @@ function MainContainer() {
 
   return (
     <div className="main-container padding">
-      <FilterBar />
+      {events && <FilterBar events={events} setEvents={handleRadio} />}
       {events ? (
         <div className="events-container">
           {events.map((event) => {
