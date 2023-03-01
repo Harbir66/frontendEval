@@ -12,7 +12,7 @@ import getFormattedDateFromUtcDate from '../../utils/common';
 import makeRequest from '../../utils/makeRequest';
 import { UPDATE_EVENT } from '../../constants/apiEndPoints';
 
-function EventCard({ event }) {
+function EventCard({ event, isBig, id, handleClick }) {
   const [isRegistered, setIsRegistered] = React.useState(event.isRegistered);
   const [isBookmarked, setIsBookmarked] = React.useState(event.isBookmarked);
   const datetime = getFormattedDateFromUtcDate(event.datetime, event.timezone);
@@ -20,10 +20,12 @@ function EventCard({ event }) {
   let leftIcon = null;
   let rightIcon = null;
   let buttonColor = '';
+  let leftLabel = null;
+  let bigLabel = 'REGISTER';
 
   const handleBookmark = async () => {
     try {
-      await makeRequest(UPDATE_EVENT(event.id), {
+      await makeRequest(UPDATE_EVENT(id), {
         data: {
           isBookmarked: !isBookmarked,
         },
@@ -34,18 +36,31 @@ function EventCard({ event }) {
     }
   };
 
-  const handleRegister = () => {
-    setIsRegistered(!isRegistered);
+  const handleRegister = async () => {
+    try {
+      await makeRequest(UPDATE_EVENT(id), {
+        data: {
+          isRegistered: !isRegistered,
+        },
+      });
+      setIsRegistered(!isRegistered);
+    } catch (e) {
+      //
+    }
   };
 
   if (event.areSeatsAvailable) {
     if (isRegistered && event.areSeatsAvailable) {
       leftIcon = <FontAwesomeIcon icon={faCircleCheck} />;
       buttonColor = 'green';
+      leftLabel = 'REGISTERED';
+      bigLabel = 'UNREGISTER';
     }
   } else {
     leftIcon = <FontAwesomeIcon icon={faCircleXmark} />;
     buttonColor = 'yellow';
+    leftLabel = 'NO SEATS AVAILABLE';
+    bigLabel = 'NO SEATS AVAILABLE';
   }
 
   if (isBookmarked) {
@@ -53,10 +68,15 @@ function EventCard({ event }) {
   } else {
     rightIcon = <FontAwesomeIcon icon={faBookmark} />;
   }
-
+  const big = isBig ? 'bigCard ' : '';
   return (
-    <div className="event-card">
-      <img src={event.imgUrl} alt="event" />
+    <div className={`event-card ${big}`}>
+      <img
+        onClick={() => handleClick(event.id)}
+        src={event.imgUrl}
+        alt="event"
+      />
+
       <hr />
       <div className="event-title">{event.name.toUpperCase()}</div>
       <div className="event-description card-padding">{event.description}</div>
@@ -69,12 +89,9 @@ function EventCard({ event }) {
         {datetime}
       </div>
       <div className="event-buttons card-padding">
-        <button
-          type="button"
-          className={`left-icon ${buttonColor}`}
-          onClick={handleRegister}
-        >
+        <button type="button" className={`left-icon ${buttonColor}`}>
           {leftIcon}
+          <span>{leftLabel}</span>
         </button>
         <button
           type="button"
@@ -84,6 +101,11 @@ function EventCard({ event }) {
           {rightIcon}
         </button>
       </div>
+      {isBig && (
+        <button className="bigButton" type="button" onClick={handleRegister}>
+          {bigLabel}
+        </button>
+      )}
     </div>
   );
 }
@@ -103,4 +125,7 @@ EventCard.propTypes = {
     isBookmarked: PropTypes.bool.isRequired,
     imgUrl: PropTypes.string.isRequired,
   }).isRequired,
+  isBig: PropTypes.bool.isRequired,
+  id: PropTypes.number.isRequired,
+  handleClick: PropTypes.func.isRequired,
 };
