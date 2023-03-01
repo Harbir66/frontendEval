@@ -1,0 +1,14 @@
+footer {
+  flex: none;
+  background-color: #000;
+  color: #fff;
+  display: flex;
+  align-items: center;
+  padding: 20px 0;
+}
+
+footer p {
+  font-family: 'Sofia Sans', sans-serif;
+  font-weight: bold;
+  font-size: 25px;
+}
