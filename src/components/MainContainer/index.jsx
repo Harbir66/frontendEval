@@ -8,8 +8,11 @@ import EventCard from '../EventCard';
 
 function MainContainer() {
   const [events, setEvents] = React.useState();
+  const [filteredEvents, setFilteredEvents] = React.useState();
   const [error, setError] = React.useState();
   const [bigComponent, setBigComponent] = React.useState(null);
+  const [radio, setRadio] = React.useState('all');
+  const [search, setSearch] = React.useState('');
   const navigate = useNavigate();
 
   React.useEffect(() => {
@@ -19,11 +22,40 @@ function MainContainer() {
           a.datetime < b.datetime ? -1 : 1
         );
         setEvents(sortedData);
+        setFilteredEvents(sortedData);
       })
       .catch((err) => {
         setError(err);
       });
   }, []);
+
+  React.useEffect(() => {
+    if (radio === 'seats-available') {
+      const filtered = events.filter((event) => event.areSeatsAvailable);
+      setFilteredEvents(filtered);
+    } else if (radio === 'bookmarked') {
+      const filtered = events.filter((event) => event.isBookmarked);
+      setFilteredEvents(filtered);
+    } else if (radio === 'registered') {
+      const filtered = events.filter((event) => event.isRegistered);
+      setFilteredEvents(filtered);
+    } else {
+      setFilteredEvents(events);
+    }
+    // console.log(filteredEvents);
+  }, [radio]);
+
+  React.useEffect(() => {
+    if (!(search === '')) {
+      const filtered = events.filter((event) =>
+        event.name.toLowerCase().includes(search.toLowerCase())
+      );
+      setFilteredEvents(filtered);
+    } else {
+      setFilteredEvents(events);
+    }
+    // console.log(filteredEvents);
+  }, [search]);
 
   const handleClick = (id) => {
     if (!bigComponent) {
@@ -33,8 +65,14 @@ function MainContainer() {
     }
   };
 
-  const handleRadio = (filteredEvents) => {
-    setEvents(filteredEvents);
+  const handleRadio = (type) => {
+    setRadio(type);
+    // console.log(type);
+  };
+
+  const handleSearch = (e) => {
+    setSearch(e.target.value);
+    // console.log(e.target.value);
   };
 
   if (error) {
@@ -61,10 +99,17 @@ function MainContainer() {
 
   return (
     <div className="main-container padding">
-      {events && <FilterBar events={events} setEvents={handleRadio} />}
+      {events && (
+        <FilterBar
+          radio={radio}
+          search={search}
+          handleRadio={handleRadio}
+          handleSearch={handleSearch}
+        />
+      )}
       {events ? (
         <div className="events-container">
-          {events.map((event) => {
+          {filteredEvents.map((event) => {
             return (
               <EventCard
                 handleClick={handleClick}

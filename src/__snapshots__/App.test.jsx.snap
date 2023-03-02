@@ -1,0 +1,36 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`renders learn react link 1`] = `
+<DocumentFragment>
+  <div
+    class="App"
+  >
+    <div
+      class="home"
+    >
+      <header
+        class="padding"
+      >
+        EVENTIFY
+      </header>
+      <div
+        class="main-container padding"
+      >
+        <div>
+          Loading...
+        </div>
+      </div>
+      <footer
+        class="padding"
+      >
+        <p>
+          THEMES
+        </p>
+        <div
+          class="themes"
+        />
+      </footer>
+    </div>
+  </div>
+</DocumentFragment>
+`;

@@ -88,7 +88,7 @@ function EventCard({ event, isBig, id, handleClick }) {
         <span>DATE: </span>
         {datetime}
       </div>
-      <div className="event-buttons card-padding">
+      <div className="event-buttons ">
         <button type="button" className={`left-icon ${buttonColor}`}>
           {leftIcon}
           <span>{leftLabel}</span>

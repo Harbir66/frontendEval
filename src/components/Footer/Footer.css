@@ -12,3 +12,32 @@ footer p {
   font-weight: bold;
   font-size: 25px;
 }
+
+.theme-selector {
+  display: flex;
+  width: 100%;
+  justify-content: space-between;
+  align-items: center;
+}
+.theme-selector > button {
+  font-family: 'Sofia Sans', sans-serif;
+  font-weight: bold;
+  font-size: 25px;
+  background-color: white;
+  width: 150px;
+  border: none;
+  outline: none;
+  cursor: pointer;
+  border-radius: 10px;
+  padding: 10px 0;
+}
+.themes {
+  margin-left: 10px;
+  display: flex;
+  gap: 0 10px;
+}
+.theme {
+  height: 50px;
+  width: 50px;
+  border-radius: 20%;
+}

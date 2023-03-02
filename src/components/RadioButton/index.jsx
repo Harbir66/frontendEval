@@ -6,7 +6,7 @@ import './RadioButton.css';
 import PropTypes from 'prop-types';
 
 function RadioButton({ type, radioFilter, handleRadio }) {
-  const [checked] = React.useState(type === radioFilter);
+  const checked = type === radioFilter;
   return (
     <button
       type="button"

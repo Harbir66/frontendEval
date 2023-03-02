@@ -1,0 +1,32 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Error Page should render 1`] = `
+<DocumentFragment>
+  <div
+    class="main"
+  >
+    <header
+      class="padding"
+    >
+      EVENTIFY
+    </header>
+    <div
+      class="pageNotFoundContainer"
+    >
+      <p>
+        404 Error. Page not found
+      </p>
+    </div>
+    <footer
+      class="padding"
+    >
+      <p>
+        THEMES
+      </p>
+      <div
+        class="themes"
+      />
+    </footer>
+  </div>
+</DocumentFragment>
+`;
