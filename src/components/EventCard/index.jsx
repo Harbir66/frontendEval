@@ -2,17 +2,15 @@ import React from 'react';
 import './EventCard.css';
 import PropTypes from 'prop-types';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import {
-  faBookmark as bookmarkSolid,
-  faCircleCheck,
-  faCircleXmark,
-} from '@fortawesome/free-solid-svg-icons';
+import { useSelector } from 'react-redux';
+import { faBookmark as bookmarkSolid, faCircleCheck, faCircleXmark } from '@fortawesome/free-solid-svg-icons';
 import { faBookmark } from '@fortawesome/free-regular-svg-icons';
 import getFormattedDateFromUtcDate from '../../utils/common';
 import makeRequest from '../../utils/makeRequest';
 import { UPDATE_EVENT } from '../../constants/apiEndPoints';
 
 function EventCard({ event, isBig, id, handleClick }) {
+  const { colorCode } = useSelector(state => state.theme);
   const [isRegistered, setIsRegistered] = React.useState(event.isRegistered);
   const [isBookmarked, setIsBookmarked] = React.useState(event.isBookmarked);
   const datetime = getFormattedDateFromUtcDate(event.datetime, event.timezone);
@@ -70,12 +68,8 @@ function EventCard({ event, isBig, id, handleClick }) {
   }
   const big = isBig ? 'bigCard ' : '';
   return (
-    <div className={`event-card ${big}`}>
-      <img
-        onClick={() => handleClick(event.id)}
-        src={event.imgUrl}
-        alt="event"
-      />
+    <div style={{ backgroundColor: colorCode }} className={`event-card ${big}`}>
+      <img onClick={() => handleClick(event.id)} src={event.imgUrl} alt="event" />
 
       <hr />
       <div className="event-title">{event.name.toUpperCase()}</div>
@@ -93,11 +87,7 @@ function EventCard({ event, isBig, id, handleClick }) {
           {leftIcon}
           <span>{leftLabel}</span>
         </button>
-        <button
-          type="button"
-          className="right-icon red"
-          onClick={handleBookmark}
-        >
+        <button type="button" className="right-icon red" onClick={handleBookmark}>
           {rightIcon}
         </button>
       </div>
