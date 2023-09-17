@@ -6,15 +6,19 @@ import { HOME_ROUTE, ERROR_ROUTE } from './constants/routes';
 // import { Header, Footer } from './components';
 import { Home, Error, PageNotFound } from './pages';
 
+import { ThemeContextProvider } from './context/ThemeContext';
+
 function App() {
   return (
     <div className="App">
       <BrowserRouter>
-        <Routes>
-          <Route path={HOME_ROUTE} element={<Home />} />
-          <Route path={`${ERROR_ROUTE}/:errorCode?`} element={<Error />} />
-          <Route path="*" element={<PageNotFound />} />
-        </Routes>
+        <ThemeContextProvider>
+          <Routes>
+            <Route path={HOME_ROUTE} element={<Home />} />
+            <Route path={`${ERROR_ROUTE}/:errorCode?`} element={<Error />} />
+            <Route path="*" element={<PageNotFound />} />
+          </Routes>
+        </ThemeContextProvider>
       </BrowserRouter>
     </div>
   );
