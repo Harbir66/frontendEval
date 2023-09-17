@@ -8,11 +8,13 @@ import {
   faCircleXmark,
 } from '@fortawesome/free-solid-svg-icons';
 import { faBookmark } from '@fortawesome/free-regular-svg-icons';
+import { ThemeContext } from '../../context/ThemeContext';
 import getFormattedDateFromUtcDate from '../../utils/common';
 import makeRequest from '../../utils/makeRequest';
 import { UPDATE_EVENT } from '../../constants/apiEndPoints';
 
 function EventCard({ event, isBig, id, handleClick }) {
+  const { themeColor } = React.useContext(ThemeContext);
   const [isRegistered, setIsRegistered] = React.useState(event.isRegistered);
   const [isBookmarked, setIsBookmarked] = React.useState(event.isBookmarked);
   const datetime = getFormattedDateFromUtcDate(event.datetime, event.timezone);
@@ -70,7 +72,10 @@ function EventCard({ event, isBig, id, handleClick }) {
   }
   const big = isBig ? 'bigCard ' : '';
   return (
-    <div className={`event-card ${big}`}>
+    <div
+      style={{ backgroundColor: themeColor }}
+      className={`event-card ${big}`}
+    >
       <img
         onClick={() => handleClick(event.id)}
         src={event.imgUrl}
